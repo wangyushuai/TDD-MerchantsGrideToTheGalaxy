@@ -13,15 +13,15 @@ import java.util.Map;
  */
 public class ComputeServiceTest {
     private ComputeService service;
-    private static Map<String,Integer> exchangeRule;
+    private static Map<String,Object> exchangeRule;
 
     @BeforeClass
     public static  void beforeClass() {
         exchangeRule = new HashMap<>();
-        exchangeRule.put("glob",1);
-        exchangeRule.put("prok",4);
-        exchangeRule.put("pish",5);
-        exchangeRule.put("tegj",50);
+        exchangeRule.put("glob","I");
+        exchangeRule.put("prok","V");
+        exchangeRule.put("pish","X");
+        exchangeRule.put("tegj","L");
         exchangeRule.put("Silver ",17);
         exchangeRule.put("Gold  ",14450);
         exchangeRule.put("Iron",195);
@@ -40,8 +40,8 @@ public class ComputeServiceTest {
         String actually = service.get(descption);
         String errorInfo = "Given Correct Rule When Input compute Galaxy Number Then Output Arabic Num";
         Assert.assertEquals(errorInfo,excepted,actually);
-
     }
+
 
 
 
