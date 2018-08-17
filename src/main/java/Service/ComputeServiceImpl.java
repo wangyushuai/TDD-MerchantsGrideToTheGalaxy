@@ -14,13 +14,17 @@ public class ComputeServiceImpl implements ComputeService {
 
     private final Map<String,Object> exchangeRule;
 
-    public ComputeServiceImpl(Map<String, Object> exchangeRule) {
+    public ComputeServiceImpl(Map<String, Object> exchangeRule) throws Exception {
         this.exchangeRule = exchangeRule;
+        if (exchangeRule == null) {
+            throw new RuntimeException();
+        }
     }
 
     // 最近太忙，没时间写，有机会一起结对编程，完成它
     @Override
     public String get(String description) {
+
 //        how much is pish tegj glob glob ?
 //                how many Credits is glob prok Silver ?
 //        how many Credits is glob prok Gold ?

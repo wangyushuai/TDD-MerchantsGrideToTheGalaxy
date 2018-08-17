@@ -1,9 +1,7 @@
 package Service;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.*;
+import org.junit.rules.ExpectedException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,6 +12,9 @@ import java.util.Map;
 public class ComputeServiceTest {
     private ComputeService service;
     private static Map<String,Object> exchangeRule;
+
+    @Rule
+    public ExpectedException exception = ExpectedException.none();
 
     @BeforeClass
     public static  void beforeClass() {
@@ -41,6 +42,25 @@ public class ComputeServiceTest {
         String errorInfo = "Given Correct Rule When Input compute Galaxy Number Then Output Arabic Num";
         Assert.assertEquals(errorInfo,excepted,actually);
     }
+
+    @Test
+    public void GiveRuleWhenInputNumAndUnitThenArabicNum() {
+        String descption = "how many Credits is glob prok Silver ?";
+        String excepted = "glob prok Silver is 68 Credits";
+        String actually = service.get(descption);
+        String errorInfo = "Galaxy Num And Galaxy Unit Copute Error";
+        Assert.assertEquals(errorInfo,excepted,actually);
+    }
+
+    @Test
+    public void WhenNullIsRullThenThorwException() throws Exception {
+        Map<String,Object> nullExchangeRule = null;
+        exception.expect(RuntimeException.class);
+        service = new ComputeServiceImpl(nullExchangeRule);
+        service.get("");
+    }
+
+
 
 
 
