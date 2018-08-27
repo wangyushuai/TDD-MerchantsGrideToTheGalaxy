@@ -22,13 +22,15 @@ public class RomanToIntegerService {
         char[] romanItems = romanNum.toCharArray();
         int preNum = 0;
         for (char item : romanItems) {
-            int curNum = (int) hashMap.get(item + "");
-            if (curNum > preNum) {
-                result += curNum - 2 * preNum;
-            } else {
-                result += curNum;
+            if (hashMap.containsKey(item)) {
+                int curNum = (int) hashMap.get(item + "");
+                if (curNum > preNum) {
+                    result += curNum - 2 * preNum;
+                } else {
+                    result += curNum;
+                }
+                preNum = curNum;
             }
-            preNum = curNum;
         }
         return result;
     }
