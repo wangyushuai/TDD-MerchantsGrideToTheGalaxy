@@ -9,6 +9,7 @@ import java.util.Map;
 /**
  * Created by wangyushuai@fang.com on 2018/8/15.
  */
+
 public class ComputeServiceTest {
     private ComputeService service;
     private static Map<String,Object> exchangeRule;
@@ -23,8 +24,8 @@ public class ComputeServiceTest {
         exchangeRule.put("prok","V");
         exchangeRule.put("pish","X");
         exchangeRule.put("tegj","L");
-        exchangeRule.put("Silver ",17);
-        exchangeRule.put("Gold  ",14450);
+        exchangeRule.put("Silver",17);
+        exchangeRule.put("Gold",14450);
         exchangeRule.put("Iron",195);
     }
 
@@ -46,11 +47,13 @@ public class ComputeServiceTest {
     @Test
     public void GiveRuleWhenInputNumAndUnitThenArabicNum() {
         String descption = "how many Credits is glob prok Silver ?";
-        String excepted = "glob prok Silver is 68 Credits";
+        String excepted = "glob prok Silver is 68 Credits\n";
         String actually = service.get(descption);
         String errorInfo = "Galaxy Num And Galaxy Unit Copute Error";
         Assert.assertEquals(errorInfo,excepted,actually);
     }
+
+
 
     @Test
     public void WhenNullIsRullThenThorwException() throws Exception {
@@ -59,6 +62,9 @@ public class ComputeServiceTest {
         service = new ComputeServiceImpl(nullExchangeRule);
         service.get("");
     }
+
+
+
 
 
 

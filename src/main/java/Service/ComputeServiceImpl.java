@@ -21,58 +21,95 @@ public class ComputeServiceImpl implements ComputeService {
         }
     }
 
-    // 最近太忙，没时间写，有机会一起结对编程，完成它
     @Override
     public String get(String description) {
-
-//        how much is pish tegj glob glob ?
-//                how many Credits is glob prok Silver ?
-//        how many Credits is glob prok Gold ?
-//                how many Credits is glob prok Iron ?
-//        how much wood could a woodchuck chuck if a woodchuck could chuck wood ?
-
-//        pish tegj glob glob is 42
-//        glob prok Silver is 68 Credits
-//        glob prok Gold is 57800 Credits
-//        glob prok Iron is 782 Credits
-//        I have no idea what you are talking about
-        if (description == "how much is pish tegj glob glob ?") {
-            return "pish tegj glob glob is 42";
-        } else if(description == "how many Credits is glob prok Silver ?") {
-            return "glob prok Silver is 68 Credits";
-        } else if(description == "how many Credits is glob prok Gold ?"){
-            return "glob prok Gold is 57800 Credits";
-        } else if(description == "how many Credits is glob prok Iron ?") {
-            return "glob prok Iron is 782 Credits";
-        } else{
-            return "I have no idea what you are talking";
+        //how much is pish tegj glob glob ?
+        //pish tegj glob glob is 42
+        String result = "";
+        String[] descArray = description.split("\n");
+        for (String desc : descArray) {
+            if (desc.indexOf("much") > 0) {
+                result += computeNums(description);
+            } else if(desc.indexOf("many") > 0) {
+                result += computeNumsAndUnit(description);
+            } else {
+                result += "I have no idea what you are talking about\n";
+            }
         }
 
-
-
-//        Pattern p=Pattern.compile("how much is (.+)");
-//        Matcher m=p.matcher(description);
-//        m.matches();
-//        while(m.find()){
-//            String nums = m.group(1);
-//            String romanNum = getRomanNumByGalaxyNumStr(nums);
-//            int arbicNum = RomanToIntegerService.Convert(romanNum);
-//            return "nums is" + arbicNum;
-//        }
-//        return null;
+        return result;
     }
 
-//    private String getRomanNumByGalaxyNumStr(String galaxyNumStr) {
-//        String[] galaxyNumsArrays =  galaxyNumStr.split(" ");
-//        String romanRum = "";
-//        if (galaxyNumsArrays != null && galaxyNumsArrays.length > 0) {
-//            for (String item : galaxyNumsArrays) {
-//                if (exchangeRule.containsKey(item)) {
-//                    return romanRum +=  exchangeRule.get(item);
-//                }
-//            }
-//
-//        }
-//        return romanRum;
-//    }
+
+    /**
+     * 计算数字
+     * @param description
+     * @return
+     */
+    private String computeNums(String description) {
+        Integer arabicNum = 0;
+        String galaxyNum = "";
+        String numPattern = "^how\\smuch\\sis\\s(.+)\\s\\?";
+        Pattern pattern = Pattern.compile(numPattern);
+        Matcher matcher = pattern.matcher(description);
+        if (matcher.find()) {
+            galaxyNum = matcher.group(1);
+            arabicNum = parseGalaxyNumToArabicNum(galaxyNum);
+            if (arabicNum >= 0) {
+                return galaxyNum + " is " + arabicNum;
+            }
+        }
+
+        return "I have no idea what you are talking about\n";
+    }
+
+    /**
+     * 计算数字和单位
+     * @param description
+     * @return
+     */
+    private String computeNumsAndUnit(String description) {
+        //how many Credits is glob prok Silver ?
+        //glob prok Silver is 68 Credits
+        Integer total = 0;
+        Integer arabicNum = 0;
+        String galaxyNum = "";
+        String unit = "";
+        Integer unitValue = 0;
+        String numPattern = "^how\\smany\\sCredits\\sis\\s(.+)\\s([A-Z][a-z]+)\\s\\?";
+        Pattern pattern = Pattern.compile(numPattern);
+        Matcher matcher = pattern.matcher(description);
+        if (matcher.find()) {
+            galaxyNum = matcher.group(1);
+            arabicNum = parseGalaxyNumToArabicNum(galaxyNum);
+            unit = matcher.group(2);
+            if (exchangeRule.containsKey(unit)) {
+                unitValue = Integer.parseInt(exchangeRule.get(unit).toString());
+                total = arabicNum * unitValue;
+                return galaxyNum + " " + unit + " is " + total + " Credits\n";
+            } else  {
+                throw  new RuntimeException("exchange rules can't find this unit!");
+            }
+        }
+        return "I have no idea what you are talking about\n";
+    }
+
+
+    /**
+     * galaxy num change to arabic num
+     * @param galaxyNum
+     * @return
+     */
+    private Integer parseGalaxyNumToArabicNum(String galaxyNum) {
+        String romanNum = "";
+        String[] nums = galaxyNum.split(" ");
+        for (String item : nums) {
+            if (exchangeRule.containsKey(item)) {
+                romanNum += exchangeRule.get(item);
+            }else {
+                throw new RuntimeException("Can not find this galaxy's num!");
+            }
+        }
+       return RomanToIntegerService.Convert(romanNum);
+    }
 }
