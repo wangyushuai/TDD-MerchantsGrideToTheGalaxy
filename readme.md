@@ -9,8 +9,11 @@
 # 程序说明
 程序为Gradle项目，使用了Junit4.7及Mockito完成单元测试
 
-# 效果预览
+# 运行结果
+![运行结果](https://github.com/wangyushuai/TDD-MerchantsGrideToTheGalaxy/blob/master/result.png)
 
+
+# github 地址
 https://github.com/wangyushuai/TDD-MerchantsGrideToTheGalaxy
  
  
