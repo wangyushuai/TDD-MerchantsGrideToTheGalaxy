@@ -46,7 +46,7 @@ public class TranslateServiceTest {
     @Test
     public void whenInputGalaxyUnitThenGetUnitValueMap() throws Exception {
         String description = baseDescription + "glob glob Silver is 34 Credits";
-        Integer expected = 17;
+        double expected = 17.0;
         Map<String,Object> actually = service.get(description);
         Assert.assertEquals("单位翻译失败！",expected,actually.get("Silver"));
     }

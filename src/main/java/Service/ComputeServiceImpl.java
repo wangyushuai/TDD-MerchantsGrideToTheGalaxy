@@ -73,11 +73,11 @@ public class ComputeServiceImpl implements ComputeService {
     private String computeNumsAndUnit(String description) {
         //how many Credits is glob prok Silver ?
         //glob prok Silver is 68 Credits
-        Integer total = 0;
+        double total = 0;
         Integer arabicNum = 0;
         String galaxyNum = "";
         String unit = "";
-        Integer unitValue = 0;
+        double unitValue = 0;
         String numPattern = "^how\\smany\\sCredits\\sis\\s(.+)\\s([A-Z][a-z]+)\\s\\?";
         Pattern pattern = Pattern.compile(numPattern);
         Matcher matcher = pattern.matcher(description);
@@ -86,9 +86,9 @@ public class ComputeServiceImpl implements ComputeService {
             arabicNum = parseGalaxyNumToArabicNum(galaxyNum);
             unit = matcher.group(2);
             if (exchangeRule.containsKey(unit)) {
-                unitValue = Integer.parseInt(exchangeRule.get(unit).toString());
+                unitValue = Double.parseDouble(exchangeRule.get(unit).toString());
                 total = arabicNum * unitValue;
-                return galaxyNum + " " + unit + " is " + total + " Credits\n";
+                return galaxyNum + " " + unit + " is " + (int)total + " Credits\n";
             } else  {
                 throw  new RuntimeException("exchange rules can't find this unit!");
             }

@@ -49,7 +49,7 @@ public class TranslateServiceImpl implements TranslateService {
         if (matcher.find()) {
             String galaxyNum = matcher.group(1);//get galaxy Num
             int arabicNum = getArabicNum(galaxyNum);
-            int unitValue = Integer.parseInt(matcher.group(3))/arabicNum;
+            double unitValue = Double.parseDouble(matcher.group(3))/arabicNum;//get unit value
             maps.put(matcher.group(2),unitValue); // unit  and galaxy unit exchange arabic value
             return true;
         }
