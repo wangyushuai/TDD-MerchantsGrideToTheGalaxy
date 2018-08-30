@@ -38,7 +38,7 @@ public class ComputeServiceTest {
     @Test
     public void  GivenRuleWhenGalaxyNumThenArabicNum() {
         String descption = "how much is pish tegj glob glob ?";
-        String excepted = "pish tegj glob glob is 42";
+        String excepted = "pish tegj glob glob is 42\n";
         String actually = service.get(descption);
         String errorInfo = "Given Correct Rule When Input compute Galaxy Number Then Output Arabic Num";
         Assert.assertEquals(errorInfo,excepted,actually);

@@ -28,12 +28,14 @@ public class ComputeServiceImpl implements ComputeService {
         String result = "";
         String[] descArray = description.split("\n");
         for (String desc : descArray) {
-            if (desc.indexOf("much") > 0) {
-                result += computeNums(description);
-            } else if(desc.indexOf("many") > 0) {
-                result += computeNumsAndUnit(description);
-            } else {
-                result += "I have no idea what you are talking about\n";
+            if (desc.indexOf("many")>0 || desc.indexOf("much") >0) {
+                if (desc.indexOf("much") > 0) {
+                    result += computeNums(desc);
+                } else if (desc.indexOf("many") > 0) {
+                    result += computeNumsAndUnit(desc);
+                } else {
+                    result += "I have no idea what you are talking about\n";
+                }
             }
         }
 
@@ -56,7 +58,7 @@ public class ComputeServiceImpl implements ComputeService {
             galaxyNum = matcher.group(1);
             arabicNum = parseGalaxyNumToArabicNum(galaxyNum);
             if (arabicNum >= 0) {
-                return galaxyNum + " is " + arabicNum;
+                return galaxyNum + " is " + arabicNum + "\n";
             }
         }
 
