@@ -33,7 +33,7 @@ public class IndexServiceTest {
         exchangeRule.put("tegj","L");
         exchangeRule.put("Silver",17);
         exchangeRule.put("Gold",14450);
-        exchangeRule.put("Iron",195);
+        exchangeRule.put("Iron",195.5);
 
     }
 
@@ -50,11 +50,6 @@ public class IndexServiceTest {
             "how many Credits is glob prok Iron ?\n" +
             "how much wood could a woodchuck chuck if a woodchuck could chuck wood ?";
 
-    @Before
-    public void setUp() throws Exception {
-        MockitoAnnotations.initMocks(this);
-    }
-
     @Ignore
     @Test
     public void whenReadThenGetNotEmpty() {
@@ -65,24 +60,19 @@ public class IndexServiceTest {
 
     @Test
     public void whenInputThenCorrectOutput() throws Exception {
-        //部分模拟
-        indexService =  spy(IndexServiceImpl.class);
-        when(indexService.read()).thenReturn(baseTestInput);
-
         //模拟翻译服务
-        //when(translateService.get(anyString())).thenReturn(exchangeRule);
+        when(translateService.get(anyString())).thenReturn(exchangeRule);
 
         //主要测试内容： 输出
         String output =  indexService.output();
-        verify(indexService).read();
-        //verify(translateService).get(anyString());
+        verify(translateService).get(anyString());
         Assert.assertNotNull(output);
         Assert.assertFalse(output.isEmpty());
         Assert.assertTrue(output.indexOf("pish tegj glob glob is 42") >= 0);
         Assert.assertTrue(output.indexOf("glob prok Silver is 68 Credits") >= 0);
         Assert.assertTrue(output.indexOf("glob prok Gold is 57800 Credits") >= 0);
         Assert.assertTrue(output.indexOf("glob prok Iron is 782 Credits") >= 0);
-//        Assert.assertTrue(output.indexOf("I have no idea what you are talking about") >= 0);
+        Assert.assertTrue(output.indexOf("I have no idea what you are talking about") >= 0);
 
     }
 

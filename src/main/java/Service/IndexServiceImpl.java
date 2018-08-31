@@ -6,6 +6,11 @@ import java.util.Map;
  * Created by wangyushuai@fang.com on 2018/8/28.
  */
 public class IndexServiceImpl implements IndexService {
+    private TranslateService translateService;
+
+    public IndexServiceImpl() {
+        translateService = new TranslateServiceImpl();
+    }
 
     public static void main(String[] args) {
         IndexService service = new IndexServiceImpl();
@@ -37,7 +42,6 @@ public class IndexServiceImpl implements IndexService {
     @Override
     public String output() throws Exception {
         String description = read();
-        TranslateService translateService = new TranslateServiceImpl();
         Map<String,Object> rules = translateService.get(description);
         ComputeService computeService = new ComputeServiceImpl(rules);
         return  computeService.get(description);
